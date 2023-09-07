@@ -1,6 +1,8 @@
 ﻿using CommerceMvc.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace CommerceMvc.Controllers
 {
@@ -26,11 +28,18 @@ namespace CommerceMvc.Controllers
         [HttpPost]
         public IActionResult Login(string currentUser)
         {
+           
+                Response.Cookies.Append("CurrentUser", currentUser);
+           
+
+            ViewBag.currentUser = Request.Cookies["CurrentUser"];
             return RedirectToAction("Index");
         }
 
         public IActionResult Logout()
         {
+
+            Response.Cookies.Delete("CurrentUser");
             return RedirectToAction("Index");
         }
 
